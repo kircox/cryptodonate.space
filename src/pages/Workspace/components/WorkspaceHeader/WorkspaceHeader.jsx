@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
-import { View, Flex, ActionButton } from "@adobe/react-spectrum";
+import React from "react";
+import { View } from "@adobe/react-spectrum";
 import { MobileHeader } from "./components/MobileHeader";
 import { DesktopHeader } from "./components/DesktopHeader";
 

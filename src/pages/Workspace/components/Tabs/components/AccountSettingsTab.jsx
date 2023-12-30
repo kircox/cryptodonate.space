@@ -1,24 +1,17 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
-import { doc, setDoc } from "firebase/firestore";
+/* eslint-disable camelcase */
+import React, { useState } from "react";
 import { Flex } from "@adobe/react-spectrum";
 import { Button, Card, Collapse, Spacer, Input } from "@nextui-org/react";
-import { validate, getAddressInfo } from "bitcoin-address-validation";
 import { useStore } from "../../../../../store";
-import {
-  updateUsername,
-  updateSetting,
-  updateWallet,
-} from "../../../../../utils/utils";
+import { updateUsername, updateWallet } from "../../../../../utils/utils";
 
 export function SettingsTab(props) {
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { db, user, user_value } = useStore((state) => state);
   const [changeName, setChangeName] = useState(true);
   const [changeBTC, setChangeBTC] = useState(true);
   const [name2, setName2] = useState("");
   const [BTCWallet2, setBTCWallet2] = useState("");
-  const [selected, setSelected] = useState("");
+  // const [selected, setSelected] = useState("");
   return (
     <>
       <Flex justifyContent={"left"} alignItems={"center"}>

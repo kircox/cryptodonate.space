@@ -1,12 +1,11 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from "react";
 
-import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
-import { useCollection, useDocument } from "react-firebase-hooks/firestore";
-import { useLocation, Navigate } from "react-router-dom";
-import { collection, getFirestore, doc } from "firebase/firestore";
+import { useUpdateProfile } from "react-firebase-hooks/auth";
+import { Navigate } from "react-router-dom";
 import { Provider, darkTheme, Grid } from "@adobe/react-spectrum";
 import { Donations } from "./components/Donations";
-import { NextUIProvider, createTheme } from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
 import { useStore } from "../../store";
 import { WorkSpaceTabs } from "./components/Tabs/WorkspaceTabs";
 import { WorkspaceHeader } from "./components/WorkspaceHeader/WorkspaceHeader";
@@ -14,27 +13,23 @@ import { WorkspaceHeader } from "./components/WorkspaceHeader/WorkspaceHeader";
 import { darkThemeNext } from "../../utils/utils";
 
 export default function WorkSpace() {
-  const [BTCWallet, setBTCWallet] = useState();
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const [BTCWallet] = useState();
+  const { auth, user, tickets_value } = useStore((state) => state);
   useEffect(() => {
     console.log(user);
   }, [user]);
 
-  const [updateProfile, updatingProfile, errorProfile] = useUpdateProfile(auth);
+  const [updateProfile] = useUpdateProfile(auth);
 
-  useEffect(() => {
-    async () => {
-      await updateProfile({ displayName, photoURL });
-      console.log("update profile");
-      console.log(user);
-    };
+  useEffect(async () => {
+    await updateProfile({});
+    // console.log("update profile");
+    // console.log(user);
   }, []);
 
-  const [isValid, setValid] = useState(false);
+  const [setValid] = useState(false);
   useEffect(() => {
-    if (BTCWallet == "") {
+    if (BTCWallet === "") {
       setValid(true);
     }
   }, []);

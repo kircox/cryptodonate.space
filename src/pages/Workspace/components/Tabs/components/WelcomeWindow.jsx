@@ -1,29 +1,17 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 
-import { doc, setDoc } from "firebase/firestore";
 import { useStore } from "../../../../../store";
-import {
-  TabList,
-  Tabs,
-  TabPanels,
-  Item,
-  View,
-  Flex,
-  Heading,
-} from "@adobe/react-spectrum";
+import { View, Flex } from "@adobe/react-spectrum";
 import {
   Button,
-  Switch,
   Card,
   Text,
-  Collapse,
-  Checkbox,
   Container,
   Spacer,
   Input,
 } from "@nextui-org/react";
 
-import { validate, getAddressInfo } from "bitcoin-address-validation";
+import { validate } from "bitcoin-address-validation";
 import { createUserData } from "../../../../../utils/utils";
 
 export function WelcomeWindow() {

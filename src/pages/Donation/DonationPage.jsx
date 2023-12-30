@@ -1,31 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  getFirestore,
-  doc,
-  setDoc,
-  Timestamp,
-} from "firebase/firestore";
-import {
-  useCollectionData,
-  useCollection,
-  useDocument,
-} from "react-firebase-hooks/firestore";
+import { collection, getFirestore, doc } from "firebase/firestore";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 
-import { v4 as uuidv4 } from "uuid";
 import QRCode from "react-qr-code";
 import {
   Progress,
   Text,
   Card,
   Input,
-  Grid,
   Textarea,
   Button,
-  createTheme,
   NextUIProvider,
   Container,
   Modal,
@@ -33,8 +18,6 @@ import {
   Loading,
   Link,
   useModal,
-  Row,
-  useInput,
   Radio,
 } from "@nextui-org/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -45,15 +28,8 @@ import { CryptoDonateLink } from "../../shared/CryptoDonateLink";
 import { darkThemeNext, USDtoBTC, createTicket } from "../../utils/utils";
 
 function DonateCard() {
-  const {
-    usdAmount,
-    valueFirestore,
-    amount,
-    status,
-    btcAmount,
-    currentTicket,
-    setBtcAmount,
-  } = useDonationPageStore((state) => state);
+  const { valueFirestore, amount, status, currentTicket, setBtcAmount } =
+    useDonationPageStore((state) => state);
 
   useEffect(() => {
     amount && amount.then((v) => setBtcAmount(v.toFixed(6)));
@@ -74,7 +50,7 @@ function DonateCard() {
     );
   }
 
-  if (valueFirestore.data() != undefined) {
+  if (valueFirestore.data() !== undefined) {
     if (status) {
       if (currentTicket) {
         return <PaidTiket />;
@@ -104,10 +80,7 @@ function DonateForm(props) {
     ticketId,
     name,
     msg,
-    setName,
-    setMsg,
     setStatus,
-    setAmount,
   } = useDonationPageStore((state) => state);
   const { setVisible, bindings } = useModal();
   return (
@@ -238,17 +211,9 @@ function DonateForm(props) {
   );
 }
 function PaidTiket(props) {
-  const {
-    valueFirestore,
-    valueTickets,
-    currentTicket,
-    ts,
-    setBtcAmount,
-    setStatus,
-    setAmount,
-    setTicketId,
-    reset,
-  } = useDonationPageStore((state) => state);
+  const { valueFirestore, currentTicket, reset } = useDonationPageStore(
+    (state) => state,
+  );
 
   return (
     <>
@@ -476,10 +441,8 @@ export function DonationPage() {
     currentTicket,
   } = useDonationPageStore((state) => state);
   const { id } = useParams();
-  const [valueFirestore, loading, error] = useDocument(
-    doc(getFirestore(app), "users", id),
-  );
-  const [valueTickets, loadingTickets, errorTickets] = useCollection(
+  const [valueFirestore] = useDocument(doc(getFirestore(app), "users", id));
+  const [valueTickets] = useCollection(
     collection(getFirestore(app), "users", id, "tickets/"),
     {
       snapshotListenOptions: { includeMetadataChanges: true },

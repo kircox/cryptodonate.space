@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from "react";
 
 import { Flex, View } from "@adobe/react-spectrum";
 import {
@@ -36,9 +37,7 @@ export function AlertsSwitch() {
   const [copied, setCopied] = useState(false);
   const [selected, setSelected] = useState("");
   const [obsAlert, setObsAlert] = useState("");
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { db, user, user_value } = useStore((state) => state);
   useEffect(() => {
     updateAlertSetting(db, user, obsAlert, user_value);
   }, [obsAlert]);
@@ -103,7 +102,7 @@ export function AlertsSwitch() {
                 $100
               </Text>
             </Flex>
-            {user_value && user_value.data().showMessage == true && (
+            {user_value && user_value.data().showMessage === true && (
               <>
                 <Text h5>Message example</Text>
               </>
@@ -140,9 +139,7 @@ export function AlertsSwitch() {
 }
 
 export function QrCodeCard() {
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { user } = useStore((state) => state);
   return (
     <Card
       css={{

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
 /**
  * @param stringTokens - описание строки которую нужно интернационализировать.
  * @param variables - значение переменных
@@ -9,14 +11,14 @@ export function getI18nText({ stringTokens, variables, translations, locale }) {
   let result = "";
   stringTokens.forEach((token) => {
     if (Array.isArray(token)) {
-      if (token[0] == "@date") {
+      if (token[0] === "@date") {
         //
         result += date({ token, locale, variables });
       }
-      if (token[0] == "@number") {
+      if (token[0] === "@number") {
         result += number({ token, locale, variables });
       }
-      if (token[0] == "@plural") {
+      if (token[0] === "@plural") {
         result += plural({
           token,
           locale,
@@ -24,16 +26,16 @@ export function getI18nText({ stringTokens, variables, translations, locale }) {
           translations,
         });
       }
-      if (token[0] == "@list") {
+      if (token[0] === "@list") {
         result += list({ token, locale, variables, translations });
       }
-      if (token[0] == "@relativeTime") {
+      if (token[0] === "@relativeTime") {
         result += relativeTime({ token, locale, variables });
       }
     } else {
-      if (token[0] == "#") {
+      if (token[0] === "#") {
         result += translations[locale][token.slice(1)];
-      } else if (token[0] == "$") {
+      } else if (token[0] === "$") {
         result += variables[token.slice(1)];
       } else {
         result += token;
@@ -65,7 +67,7 @@ function date({ token, locale }) {
 
 function number({ token, variables, locale }) {
   let value = 0;
-  if (token[1][0] == "$") {
+  if (token[1][0] === "$") {
     value = variables[token[1].slice(1)];
   } else {
     value = token[1];
@@ -117,9 +119,9 @@ function list({ token, locale, variables, translations }) {
     type: "conjunction",
   });
   token.slice(1).forEach((arg) => {
-    if (arg[0] == "$") {
+    if (arg[0] === "$") {
       arr.push(variables[arg.slice(1)]);
-    } else if (arg[0] == "#") {
+    } else if (arg[0] === "#") {
       arr.push(translations[locale][arg.slice(1)]);
     } else {
       arr.push(arg);

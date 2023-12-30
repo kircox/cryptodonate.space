@@ -1,6 +1,6 @@
 import { Link } from "@nextui-org/react";
 
-import React, { useRef, useState, useContext, useEffect } from "react";
+import React from "react";
 
 export function CryptoDonateLink() {
   return (

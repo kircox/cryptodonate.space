@@ -1,11 +1,11 @@
 import { doc, setDoc } from "firebase/firestore";
 import { createTheme } from "@nextui-org/react";
-import { bitcoinToFiat, fiatToBitcoin } from "bitcoin-conversion";
+import { fiatToBitcoin } from "bitcoin-conversion";
 
-import { validate, getAddressInfo } from "bitcoin-address-validation";
+import { validate } from "bitcoin-address-validation";
 
 export async function USDtoBTC(usd) {
-  if (usd == "") {
+  if (usd === "") {
     return 0;
   }
   const paymentInBtcFromUsd = await fiatToBitcoin(usd, "USD");

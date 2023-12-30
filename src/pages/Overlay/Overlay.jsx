@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../store";
 import { collection, getFirestore, doc } from "firebase/firestore";
@@ -12,7 +13,6 @@ import {
   Spacer,
   Loading,
 } from "@nextui-org/react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 import { Flex } from "@adobe/react-spectrum";
 import { ticketFilter } from "../../utils/stats";
@@ -27,17 +27,15 @@ const darkThemeNext = createTheme({
 
 function DonateAlert(props) {
   console.log(props.id);
-  const { auth, app, db, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { app } = useStore((state) => state);
 
-  const [value, loading, error] = useDocument(
+  const [value, loading] = useDocument(
     doc(getFirestore(app), "users", props.id),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
     },
   );
-  const [valueTickets, loadingTickets, errorTickets] = useCollection(
+  const [valueTickets] = useCollection(
     collection(getFirestore(app), "users", props.id, "tickets/"),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
@@ -62,7 +60,7 @@ function DonateAlert(props) {
   }, [count]);
 
   useEffect(() => {
-    if (visibility == "visible") {
+    if (visibility === "visible") {
       setTimeout(() => {
         setVisibility("hidden");
       }, 8000);
@@ -79,10 +77,10 @@ function DonateAlert(props) {
     );
   }
 
-  if (value.data() != undefined && valueTickets) {
+  if (value.data() !== undefined && valueTickets) {
     const confirmTickets = ticketFilter(valueTickets);
 
-    if (confirmTickets.length == 0) {
+    if (confirmTickets.length === 0) {
       return (
         <TestDonate
           visibility={visibility}
@@ -144,7 +142,7 @@ export function TestDonate(props) {
                     </Text>
                   </Flex>
 
-                  {props.value.data().showMessage == true && (
+                  {props.value.data().showMessage === true && (
                     <Text h2>Test donate</Text>
                   )}
                 </Card>
@@ -158,10 +156,10 @@ export function TestDonate(props) {
 }
 
 export function LastDonate(props) {
-  const [visibility, setVisibility] = useState("hidden");
+  // const [visibility, setVisibility] = useState("hidden");
   return (
     <>
-      {props.value.data().alert == true && (
+      {props.value.data().alert === true && (
         <Container css={{ visibility: props.visibility }}>
           <Container>
             <>
@@ -198,7 +196,7 @@ export function LastDonate(props) {
                     </Text>
                   </Flex>
 
-                  {props.value.data().showMessage == true && (
+                  {props.value.data().showMessage === true && (
                     <Text h2>
                       {
                         props.confirmTickets[props.confirmTickets.length - 1]

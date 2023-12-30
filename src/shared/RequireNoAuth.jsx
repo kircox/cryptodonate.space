@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { useStore } from "../store";
-import { useAuthState } from "react-firebase-hooks/auth";
+// eslint-disable-next-line react/prop-types
 export const RequireNoAuth = ({ children }) => {
   const location = useLocation();
   // const { auth } = useContext(Context);
   // const [user] = useAuthState(auth);
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { user } = useStore((state) => state);
   console.log("проверка отсуствия авторизации");
   if (user) {
     console.log(user);

@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+/* eslint-disable react/no-deprecated */
+import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getFirestore } from "firebase/firestore";
 import Favicon from "react-favicon";
 // eslint-disable-next-line
 import "./styles.css";
-import { useStore } from "./store";
+
 import Login from "./pages/Login/Login.jsx";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";

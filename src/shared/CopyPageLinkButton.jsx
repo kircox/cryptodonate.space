@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Copy from "@spectrum-icons/workflow/Copy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Tooltip } from "@nextui-org/react";

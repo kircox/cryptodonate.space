@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React from "react";
 import { Button } from "@nextui-org/react";
 import GlobeOutline from "@spectrum-icons/workflow/GlobeOutline";
 import { useStore } from "../store";

@@ -1,12 +1,11 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState } from "react";
 
-import { useLocation, Navigate } from "react-router-dom";
 import {
   Button,
   Spacer,
   Text,
   Input,
-  Grid,
   Card,
   Container,
   Loading,
@@ -15,14 +14,12 @@ import {
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
-  useUpdateProfile,
 } from "react-firebase-hooks/auth";
-import { ActionButton, Flex } from "@adobe/react-spectrum";
+import { Flex } from "@adobe/react-spectrum";
 import { useStore } from "../../../store";
 
-import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-import ArrowLeft from "@spectrum-icons/workflow/ArrowLeft";
 import { Logo } from "../../../shared/Logo";
 import { TwitterLink } from "../../../shared/TwitterLink";
 // import { ArrowLeftSquare } from "react-iconly";
@@ -32,15 +29,16 @@ const SignIn = (props) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
 
-  const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
+  // const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
 
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
   const [signInWithEmailAndPassword, user2, loading2, error2] =
     useSignInWithEmailAndPassword(auth);
+  console.log(user2);
   if (error2) {
     return (
       <Flex direction="column" alignItems={"center"} justifyContent={"center"}>
@@ -71,7 +69,7 @@ const SignIn = (props) => {
       </div>
     );
   }
-  if (createUser == false) {
+  if (createUser === false) {
     return (
       <>
         <Card
@@ -218,9 +216,7 @@ const SignIn = (props) => {
   }
 };
 export function Page() {
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { auth } = useStore((state) => state);
 
   const login = async () => {
     // console.log("нажата кнопка Sign in with Google");
@@ -238,7 +234,7 @@ export function Page() {
   };
   const [signUpWithEmail, setSignUpWithEmail] = useState(false);
 
-  if (signUpWithEmail == false) {
+  if (signUpWithEmail === false) {
     // console.log(false);
     return (
       <>

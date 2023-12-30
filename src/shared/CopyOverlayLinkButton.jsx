@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 
 import Copy from "@spectrum-icons/workflow/Copy";
 

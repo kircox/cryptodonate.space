@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
-import { View, Flex, ActionButton } from "@adobe/react-spectrum";
-import { Link, Container } from "@nextui-org/react";
+import React from "react";
+import { View, Flex } from "@adobe/react-spectrum";
+import { Container } from "@nextui-org/react";
 import { SignOutButton } from "../../../../../shared/SignOutButton";
 import { Logo } from "../../../../../shared/Logo";
 

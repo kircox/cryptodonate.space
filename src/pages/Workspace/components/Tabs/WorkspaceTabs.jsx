@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+/* eslint-disable camelcase */
+import React from "react";
 
 import {
   TabList,
@@ -18,9 +19,7 @@ import { StatsTab } from "./components/StatsTab";
 import { useStore } from "../../../../store";
 
 export function WorkSpaceTabs() {
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { user_value } = useStore((state) => state);
 
   if (user_value && user_value._document == null) {
     return <WelcomeWindow />;

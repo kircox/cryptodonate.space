@@ -1,7 +1,9 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+/* eslint-disable camelcase */
+/* eslint-disable react/prop-types */
+import React, { useState } from "react";
 import { Flex } from "@adobe/react-spectrum";
 import { Card, Spacer, Text } from "@nextui-org/react";
-import { LineChart, Line, Tooltip, YAxis } from "recharts";
+import { LineChart, Line, Tooltip } from "recharts";
 import { format } from "fecha";
 import { useStore } from "../../../../../store";
 import {
@@ -10,9 +12,8 @@ import {
   countDonate,
   ticketFilter,
 } from "../../../../../utils/stats";
-import { getI18nText } from "../../../../../i18n";
 
-function CustomTooltip({ payload, label, active }) {
+function CustomTooltip({ payload, active }) {
   if (active) {
     if (payload != null) {
       return (
@@ -68,11 +69,9 @@ export function MonthLabel() {
 }
 
 export function AmountLabel() {
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { tickets_value } = useStore((state) => state);
   const confirmTickets = ticketFilter(tickets_value);
-  const [month, setMounth] = useState(format(new Date(), "MMMM"));
+  const [month] = useState(format(new Date(), "MMMM"));
   return (
     <>
       <Text
@@ -93,7 +92,7 @@ export function AmountLabel() {
 export function DonationsCount() {
   const { tickets_value } = useStore((state) => state);
   const confirmTickets = ticketFilter(tickets_value);
-  const [month, setMounth] = useState(format(new Date(), "MMMM"));
+  const [month] = useState(format(new Date(), "MMMM"));
 
   return (
     <>
@@ -117,7 +116,7 @@ export function DonationsCount() {
             textGradient: "45deg, $blue500 -20%, $blue400 50%",
           }}
         >
-          {countDonate(confirmTickets, month) == 1 ? "donation" : "donations"}
+          {countDonate(confirmTickets, month) === 1 ? "donation" : "donations"}
         </Text>
       </Flex>
     </>
@@ -127,7 +126,7 @@ export function DonationsCount() {
 export function EarningLineChart() {
   const { tickets_value } = useStore((state) => state);
   const confirmTickets = ticketFilter(tickets_value);
-  const [month, setMonth] = useState(format(new Date(), "MMMM"));
+  const [month] = useState(format(new Date(), "MMMM"));
   return (
     <LineChart
       width={550}

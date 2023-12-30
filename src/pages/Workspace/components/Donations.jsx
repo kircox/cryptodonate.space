@@ -1,7 +1,9 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
-import { doc, setDoc, deleteDoc } from "firebase/firestore";
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from "react";
+import { deleteDoc } from "firebase/firestore";
 import { View, Flex, ActionButton, Heading } from "@adobe/react-spectrum";
-import { Text, Container, Spacer, Button } from "@nextui-org/react";
+import { Text, Container, Spacer } from "@nextui-org/react";
 import Delete from "@spectrum-icons/workflow/Delete";
 import { format } from "fecha";
 import { useStore } from "../../../store";
@@ -10,53 +12,53 @@ import { CopyPageLinkButton } from "../../../shared/CopyPageLinkButton";
 import { OpenPageButton } from "../../../shared/OpenPageButton";
 // import useSound from "use-sound";
 // import beep from "../../public/coins.mp3";
-function getLastInputs(adress, value, wallet) {
-  if (adress == wallet) {
-    return value;
-  }
-}
+// function getLastInputs(adress, value, wallet) {
+//   if (adress == wallet) {
+//     return value;
+//   }
+// }
 
-function getConfirmationTickets(ticket, lastInputs, db) {
-  if (ticket.amount == (lastInputs / 100000000).toString()) {
-    setDoc(
-      doc(db, "users", ticket.recipientID, "tickets/" + ticket.time),
+// function getConfirmationTickets(ticket, lastInputs, db) {
+//   if (ticket.amount == (lastInputs / 100000000).toString()) {
+//     setDoc(
+//       doc(db, "users", ticket.recipientID, "tickets/" + ticket.time),
 
-      {
-        status: "confirm",
-        statusColor: "positive",
-        show: true,
-      },
-      { merge: true },
-    );
-  }
-}
+//       {
+//         status: "confirm",
+//         statusColor: "positive",
+//         show: true,
+//       },
+//       { merge: true },
+//     );
+//   }
+// }
 
-function comparer(lastInputs, tickets, db) {
-  tickets &&
-    tickets.docs.map((doc) =>
-      getConfirmationTickets(doc.data(), lastInputs, db),
-    );
-}
+// function comparer(lastInputs, tickets, db) {
+//   tickets &&
+//     tickets.docs.map((doc) =>
+//       getConfirmationTickets(doc.data(), lastInputs, db),
+//     );
+// }
 
-function changeStatus(value, tickets, db) {
-  //
-  if (value) {
-    value.data().myAddressTxsMempool.map((v) => {
-      v.vout.map((vout) =>
-        comparer(
-          getLastInputs(
-            vout.scriptpubkey_address,
-            vout.value,
-            value.data().wallet,
-          ),
-          tickets,
-          db,
-        ),
-      );
-    });
-  }
-  return null;
-}
+// function changeStatus(value, tickets, db) {
+//   //
+//   if (value) {
+//     value.data().myAddressTxsMempool.map((v) => {
+//       v.vout.map((vout) =>
+//         comparer(
+//           getLastInputs(
+//             vout.scriptpubkey_address,
+//             vout.value,
+//             value.data().wallet,
+//           ),
+//           tickets,
+//           db,
+//         ),
+//       );
+//     });
+//   }
+//   return null;
+// }
 
 async function delDoc(doc) {
   await deleteDoc(doc.ref);
@@ -67,7 +69,7 @@ function ticketFilter(valueTickets) {
     const arrConfirm = [];
     valueTickets.docs.map((doc) => arr.push(doc));
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].data().status == "confirm") {
+      if (arr[i].data().status === "confirm") {
         arrConfirm.push(arr[i]);
       }
     }
@@ -83,9 +85,7 @@ function convertDate(t) {
   return dateIn;
 }
 export function Donations() {
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { tickets_value } = useStore((state) => state);
 
   const confirmTickets = ticketFilter(tickets_value);
   const [copied, setCopied] = useState(false);
@@ -127,7 +127,7 @@ export function Donations() {
         gridArea="toc"
       >
         <Container css={{ backgroundColor: "rgba(0,0,0,0)" }}>
-          {confirmTickets && confirmTickets.length == 0 && (
+          {confirmTickets && confirmTickets.length === 0 && (
             <div id="donations">
               <Flex
                 direction="column"

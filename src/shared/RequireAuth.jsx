@@ -1,14 +1,12 @@
-import React, { useContext, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { useStore } from "../store";
-import { useAuthState } from "react-firebase-hooks/auth";
 export const RequireAuth = ({ children }) => {
   const location = useLocation();
   // const { auth } = useContext(Context);
 
-  const { auth, app, db, user, user_value, tickets_value } = useStore(
-    (state) => state,
-  );
+  const { auth, user } = useStore((state) => state);
 
   console.log("проверка авторизации");
   useEffect(() => {

@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+/* eslint-disable react/prop-types */
+import React from "react";
 import { View, Flex, ActionButton } from "@adobe/react-spectrum";
 import GlobeOutline from "@spectrum-icons/workflow/GlobeOutline";
-import { Link, Container } from "@nextui-org/react";
+import { Link } from "@nextui-org/react";
 import { useStore } from "../store";
 
 export function Logo(props) {
