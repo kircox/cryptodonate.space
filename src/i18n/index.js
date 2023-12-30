@@ -6,130 +6,130 @@
  */
 
 export function getI18nText({ stringTokens, variables, translations, locale }) {
-	let result = "";
-	stringTokens.forEach((token) => {
-		if (Array.isArray(token)) {
-			if (token[0] == "@date") {
-				//
-				result += date({ token, locale, variables });
-			}
-			if (token[0] == "@number") {
-				result += number({ token, locale, variables });
-			}
-			if (token[0] == "@plural") {
-				result += plural({
-					token,
-					locale,
-					variables,
-					translations,
-				});
-			}
-			if (token[0] == "@list") {
-				result += list({ token, locale, variables, translations });
-			}
-			if (token[0] == "@relativeTime") {
-				result += relativeTime({ token, locale, variables });
-			}
-		} else {
-			if (token[0] == "#") {
-				result += translations[locale][token.slice(1)];
-			} else if (token[0] == "$") {
-				result += variables[token.slice(1)];
-			} else {
-				result += token;
-			}
-		}
-	});
-	return result;
+  let result = "";
+  stringTokens.forEach((token) => {
+    if (Array.isArray(token)) {
+      if (token[0] == "@date") {
+        //
+        result += date({ token, locale, variables });
+      }
+      if (token[0] == "@number") {
+        result += number({ token, locale, variables });
+      }
+      if (token[0] == "@plural") {
+        result += plural({
+          token,
+          locale,
+          variables,
+          translations,
+        });
+      }
+      if (token[0] == "@list") {
+        result += list({ token, locale, variables, translations });
+      }
+      if (token[0] == "@relativeTime") {
+        result += relativeTime({ token, locale, variables });
+      }
+    } else {
+      if (token[0] == "#") {
+        result += translations[locale][token.slice(1)];
+      } else if (token[0] == "$") {
+        result += variables[token.slice(1)];
+      } else {
+        result += token;
+      }
+    }
+  });
+  return result;
 }
 
 function date({ token, locale }) {
-	let dateToken = token[1];
-	if (typeof token[1] == "string") {
-		dateToken = Date.parse(token[1]);
-	}
+  let dateToken = token[1];
+  if (typeof token[1] === "string") {
+    dateToken = Date.parse(token[1]);
+  }
 
-	let dateFormatter = new Intl.DateTimeFormat([locale], {
-		weekday: "long",
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-		timeZoneName: "short",
-		timeZone: "Europe/Moscow",
-		hour: "numeric",
-		minute: "numeric",
-		second: "numeric",
-	});
-	return dateFormatter.format(dateToken);
+  const dateFormatter = new Intl.DateTimeFormat([locale], {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZoneName: "short",
+    timeZone: "Europe/Moscow",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  });
+  return dateFormatter.format(dateToken);
 }
 
 function number({ token, variables, locale }) {
-	let value = 0;
-	if (token[1][0] == "$") {
-		value = variables[token[1].slice(1)];
-	} else {
-		value = token[1];
-	}
-	let numberFormatter = undefined;
-	if (token[2]) {
-		numberFormatter = new Intl.NumberFormat([locale], {
-			style: "currency",
-			currency: token[2],
-		});
-	} else {
-		numberFormatter = new Intl.NumberFormat([locale], {});
-	}
+  let value = 0;
+  if (token[1][0] == "$") {
+    value = variables[token[1].slice(1)];
+  } else {
+    value = token[1];
+  }
+  let numberFormatter;
+  if (token[2]) {
+    numberFormatter = new Intl.NumberFormat([locale], {
+      style: "currency",
+      currency: token[2],
+    });
+  } else {
+    numberFormatter = new Intl.NumberFormat([locale], {});
+  }
 
-	return numberFormatter.format(value);
+  return numberFormatter.format(value);
 }
 
 function plural({ token, locale, variables, translations }) {
-	const pr = new Intl.PluralRules(locale);
-	const formatOrdinals = (n) => {
-		// отделить целую часть от десятичной и применить правило к целой части
-		//целая часть
-		let int = n;
-		//дестичная часть
-		let dec = "";
-		string_n = String(n);
-		if (!Number.isInteger(n)) {
-			int = Math.floor(n);
-			dec = string_n.slice(string_n.indexOf(".") + 1, string_n.length);
-		}
-		if (dec !== "") {
-			dec = "," + dec;
-		}
+  const pr = new Intl.PluralRules(locale);
+  const formatOrdinals = (n) => {
+    // отделить целую часть от десятичной и применить правило к целой части
+    // целая часть
+    let int = n;
+    // дестичная часть
+    let dec = "";
+    string_n = String(n);
+    if (!Number.isInteger(n)) {
+      int = Math.floor(n);
+      dec = string_n.slice(string_n.indexOf(".") + 1, string_n.length);
+    }
+    if (dec !== "") {
+      dec = "," + dec;
+    }
 
-		// применяю правило к целой части
-		const rule = pr.select(int);
-		const pluralForms = translations[locale][token[1].slice(1)];
-		const form = pluralForms[rule];
-		//десятичная часть добавляется после запятой
-		return `${int}${dec}${form}`;
-	};
-	return formatOrdinals(variables[token[2].slice(1)]);
+    // применяю правило к целой части
+    const rule = pr.select(int);
+    const pluralForms = translations[locale][token[1].slice(1)];
+    const form = pluralForms[rule];
+    // десятичная часть добавляется после запятой
+    return `${int}${dec}${form}`;
+  };
+  return formatOrdinals(variables[token[2].slice(1)]);
 }
 
 function list({ token, locale, variables, translations }) {
-	let arr = [];
-	const formatter = new Intl.ListFormat(locale, {
-		style: "long",
-		type: "conjunction",
-	});
-	token.slice(1).forEach((arg) => {
-		if (arg[0] == "$") {
-			arr.push(variables[arg.slice(1)]);
-		} else if (arg[0] == "#") {
-			arr.push(translations[locale][arg.slice(1)]);
-		} else {
-			arr.push(arg);
-		}
-	});
-	return formatter.format(arr);
+  const arr = [];
+  const formatter = new Intl.ListFormat(locale, {
+    style: "long",
+    type: "conjunction",
+  });
+  token.slice(1).forEach((arg) => {
+    if (arg[0] == "$") {
+      arr.push(variables[arg.slice(1)]);
+    } else if (arg[0] == "#") {
+      arr.push(translations[locale][arg.slice(1)]);
+    } else {
+      arr.push(arg);
+    }
+  });
+  return formatter.format(arr);
 }
 function relativeTime({ token, locale }) {
-	const formatter = new Intl.RelativeTimeFormat(locale);
-	return formatter.format(token[1], token[2]);
+  const formatter = new Intl.RelativeTimeFormat(locale);
+  return formatter.format(token[1], token[2]);
 }
 
 // console.log(

@@ -8,36 +8,36 @@ import { collection, getFirestore, doc } from "firebase/firestore";
 import { useStore } from "../store";
 
 export function InitStore(props) {
-	const { auth, app, setValue, setTickets, setUser } = useStore(
-		(state) => state
-	);
+  const { auth, app, setValue, setTickets, setUser } = useStore(
+    (state) => state,
+  );
 
-	const [value, loading, error] = useDocument(
-		doc(getFirestore(app), "users", props.user.uid),
-		{
-			snapshotListenOptions: { includeMetadataChanges: true },
-		}
-	);
-	const [valueTickets, loadingTickets, errorTickets] = useCollection(
-		collection(getFirestore(app), "users", props.user.uid, "tickets/"),
-		{
-			snapshotListenOptions: { includeMetadataChanges: true },
-		}
-	);
-	useEffect(() => {
-		console.log(props.auth);
-	}, [props.auth]);
+  const [value, loading, error] = useDocument(
+    doc(getFirestore(app), "users", props.user.uid),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    },
+  );
+  const [valueTickets, loadingTickets, errorTickets] = useCollection(
+    collection(getFirestore(app), "users", props.user.uid, "tickets/"),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    },
+  );
+  useEffect(() => {
+    console.log(props.auth);
+  }, [props.auth]);
 
-	useEffect(() => {
-		setUser(props.user);
-	}, [props.user]);
+  useEffect(() => {
+    setUser(props.user);
+  }, [props.user]);
 
-	useEffect(() => {
-		if (value && valueTickets) {
-			setValue(value);
-			setTickets(valueTickets);
-		}
-	}, [value, valueTickets]);
+  useEffect(() => {
+    if (value && valueTickets) {
+      setValue(value);
+      setTickets(valueTickets);
+    }
+  }, [value, valueTickets]);
 
-	return <></>;
+  return <></>;
 }

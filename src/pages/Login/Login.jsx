@@ -4,20 +4,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Page } from "./components/Page";
 
 const darkThemeNext = createTheme({
-	type: "dark",
-	theme: {
-		colors: {}, // optional
-	},
+  type: "dark",
+  theme: {
+    colors: {}, // optional
+  },
 });
 export default function Login() {
-	const location = useLocation();
-	const navigate = useNavigate();
-	const fromPage = location.state?.from?.pathname || "/";
+  const location = useLocation();
+  const navigate = useNavigate();
+  const fromPage = location.state?.from?.pathname || "/";
 
-	return (
-		<>
-			<NextUIProvider theme={darkThemeNext} />
-			<Page />
-		</>
-	);
+  return (
+    <>
+      <NextUIProvider theme={darkThemeNext} />
+      <Page />
+    </>
+  );
 }

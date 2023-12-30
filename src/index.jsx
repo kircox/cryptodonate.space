@@ -23,42 +23,39 @@ const auth = getAuth(app);
 export const db = getFirestore(app);
 
 function App() {
-	const [user] = useAuthState(auth);
-	console.log(user);
+  const [user] = useAuthState(auth);
 
-	return (
-		<>
-			<Favicon url={icon} />
-			{user && <InitStore user={user} />}
-			<BrowserRouter>
-				<Routes>
-					<Route
-						path='/'
-						element={
-							<RequireNoAuth>
-								<Login />
-							</RequireNoAuth>
-						}
-					/>
+  return (
+    <>
+      <Favicon url={icon} />
+      {user && <InitStore user={user} />}
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <RequireNoAuth>
+                <Login />
+              </RequireNoAuth>
+            }
+          />
 
-					<Route
-						path='/workspace'
-						element={
-							<RequireAuth>{user && <WorkSpace />}</RequireAuth>
-						}
-					/>
-					<Route path='user/:id' element={<DonationPage />} />
-					<Route
-						path='overlay/:id'
-						element={
-							<div id='overlay'>
-								<Overlay />
-							</div>
-						}
-					/>
-				</Routes>
-			</BrowserRouter>
-		</>
-	);
+          <Route
+            path="/workspace"
+            element={<RequireAuth>{user && <WorkSpace />}</RequireAuth>}
+          />
+          <Route path="user/:id" element={<DonationPage />} />
+          <Route
+            path="overlay/:id"
+            element={
+              <div id="overlay">
+                <Overlay />
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 ReactDOM.render(<App />, document.getElementById("app"));
