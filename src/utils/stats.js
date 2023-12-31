@@ -5,7 +5,7 @@ export function ticketFilter(valueTickets) {
     const arrConfirm = [];
     valueTickets.docs.map((doc) => arr.push(doc.data()));
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].status == "confirm") {
+      if (arr[i].status === "confirm") {
         arrConfirm.push(arr[i]);
       }
     }
@@ -19,7 +19,7 @@ export function sum(confirmTickets, month) {
   if (confirmTickets && month) {
     const lastMounth = getLastMounthDonates(confirmTickets, month);
     // console.log(lastMounth);
-    if (lastMounth.length == 0) {
+    if (lastMounth.length === 0) {
       return 0;
     }
     let sum = 0;
@@ -51,7 +51,7 @@ export function getLastMounthDonates(confirmTickets, month) {
         "MMMM",
       );
       // console.log(date, month);
-      if (date == month) {
+      if (date === month) {
         // console.log(date, month);
 
         arr.push(confirmTickets[i]);
@@ -64,14 +64,14 @@ export function getLastMounthDonates(confirmTickets, month) {
       stonksDays.push(format(new Date(arr[i].time * 1000), "DD"));
     }
     const uniqueStonksDays = stonksDays.filter(function (item, pos) {
-      return stonksDays.indexOf(item) == pos;
+      return stonksDays.indexOf(item) === pos;
     });
     // console.log(uniqueStonksDays);
     function sumDay(day) {
       let sum = 0;
       for (let i = 0; i < arr.length; i++) {
         if (
-          format(new Date(arr[i].time * 1000), "DD") == uniqueStonksDays[day]
+          format(new Date(arr[i].time * 1000), "DD") === uniqueStonksDays[day]
         ) {
           sum = sum + Number(arr[i].usdAmount);
         }
@@ -95,7 +95,7 @@ export function getLastMounthDonates(confirmTickets, month) {
     }
     chartData.forEach((v) => {
       initData.forEach((val, index) => {
-        if (v.name == val.name) {
+        if (v.name === val.name) {
           initData[index] = v;
         }
       });
