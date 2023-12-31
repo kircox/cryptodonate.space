@@ -4,20 +4,19 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getFirestore } from "firebase/firestore";
 import Favicon from "react-favicon";
-// eslint-disable-next-line
 import "./styles.css";
 
-import Login from "./pages/Login/Login.jsx";
+import Login from "./pages/LoginPage/LoginPage.jsx";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import WorkSpace from "./pages/Workspace/Workspace";
-import { RequireAuth } from "./shared/RequireAuth";
-import { RequireNoAuth } from "./shared/RequireNoAuth";
+import WorkSpace from "./pages/WorkspacePage/WorkspacePage.jsx";
+import { RequireAuth } from "./components/routing/auth/RequireAuth.jsx";
+import { RequireNoAuth } from "./components/routing/auth/RequireNoAuth.jsx";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { DonationPage } from "./pages/Donation/DonationPage";
-import Overlay from "./pages/Overlay/Overlay";
+import { DonationPage } from "./pages/DonationPage/DonationPage.jsx";
+import Overlay from "./pages/OverlayPage/OverlayPage.jsx";
 import icon from "../public/Favicon.ico";
-import { InitStore } from "./shared/InitStore";
+import { InitStore } from "./components/utils/InitStore.jsx";
 import { firebaseConfig } from "../config";
 export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
