@@ -2,7 +2,7 @@ import { Link } from "@nextui-org/react";
 
 import React from "react";
 
-export function CryptoDonateLink() {
+export function CryptoDonateLink() : JSX.Element {
   return (
     <Link
       css={{}}

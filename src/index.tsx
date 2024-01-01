@@ -8,8 +8,8 @@ import Login from "./pages/LoginPage/LoginPage.jsx";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import WorkSpace from "./pages/WorkspacePage/WorkspacePage.jsx";
-import { RequireAuth } from "./components/routing/auth/RequireAuth.jsx";
-import { RequireNoAuth } from "./components/routing/auth/RequireNoAuth.jsx";
+import { RequireAuth } from "./components/auth/RequireAuth";
+import { RequireNoAuth } from "./components/auth/RequireNoAuth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { DonationPage } from "./pages/DonationPage/DonationPage.jsx";
 import Overlay from "./pages/OverlayPage/OverlayPage.jsx";
@@ -37,9 +37,7 @@ function App(): JSX.Element {
           />
           <Route
             path="/workspace"
-            element={
-              <RequireAuth>{user !== null && <WorkSpace />}</RequireAuth>
-            }
+            element={<RequireAuth>{<WorkSpace />}</RequireAuth>}
           />
           <Route path="user/:id" element={<DonationPage />} />
           <Route
