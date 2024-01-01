@@ -1,4 +1,5 @@
-/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import React, { useState, useEffect } from "react";
 
 import { useUpdateProfile } from "react-firebase-hooks/auth";
@@ -8,7 +9,7 @@ import { Donations } from "./components/Donations";
 import { NextUIProvider } from "@nextui-org/react";
 import { useStore } from "../../store";
 import { WorkSpaceTabs } from "./components/Tabs/Tabs";
-import { WorkspaceHeader } from "./components/Header/Header";
+import { WorkspaceHeader } from "./components/Header/WorkspaceHeader";
 
 import { darkThemeNext } from "../../utils/utils";
 

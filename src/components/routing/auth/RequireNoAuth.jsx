@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { useStore } from "../../../store.js";
+import { useStore } from "../../../store";
 // eslint-disable-next-line react/prop-types
 export const RequireNoAuth = ({ children }) => {
   const location = useLocation();

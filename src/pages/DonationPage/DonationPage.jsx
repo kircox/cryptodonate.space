@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { collection, getFirestore, doc } from "firebase/firestore";
-import { useCollection, useDocument } from "react-firebase-hooks/firestore";
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { collection, getFirestore, doc } from 'firebase/firestore'
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 
-import QRCode from "react-qr-code";
+import QRCode from 'react-qr-code'
 import {
   Progress,
   Text,
@@ -18,60 +18,60 @@ import {
   Loading,
   Link,
   useModal,
-  Radio,
-} from "@nextui-org/react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Flex } from "@adobe/react-spectrum";
-import { useDonationPageStore, useStore } from "../../store";
-import { TwitterLink } from "../../components/shared/TwitterLink";
-import { CryptoDonateLink } from "../../components/shared/CryptoDonateLink";
-import { darkThemeNext, USDtoBTC, createTicket } from "../../utils/utils";
+  Radio
+} from '@nextui-org/react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { Flex } from '@adobe/react-spectrum'
+import { useDonationPageStore, useStore } from '../../store'
+import { TwitterLink } from '../../components/shared/TwitterLink'
+import { CryptoDonateLink } from '../../components/shared/CryptoDonateLink'
+import { darkThemeNext, USDtoBTC, createTicket } from '../../utils/utils'
 
-function DonateCard() {
+function DonateCard () {
   const { valueFirestore, amount, status, currentTicket, setBtcAmount } =
-    useDonationPageStore((state) => state);
+    useDonationPageStore((state) => state)
 
   useEffect(() => {
-    amount && amount.then((v) => setBtcAmount(v.toFixed(6)));
-  }, [amount]);
+    amount?.then((v) => setBtcAmount(v.toFixed(6)))
+  }, [amount])
 
   if (!valueFirestore) {
     return (
       <>
         <Flex
-          justifyContent={"center"}
+          justifyContent={'center'}
           alignItems="center"
-          height={"100vh"}
+          height={'100vh'}
           direction="column"
         >
           <Loading size="md" />
         </Flex>
       </>
-    );
+    )
   }
 
   if (valueFirestore.data() !== undefined) {
     if (status) {
       if (currentTicket) {
-        return <PaidTiket />;
+        return <PaidTiket />
       }
     }
-    return <DonateForm />;
+    return <DonateForm />
   }
 
   return (
     <Flex
-      justifyContent={"center"}
+      justifyContent={'center'}
       gap="size-1000"
       alignItems="center"
-      height={"90vh"}
+      height={'90vh'}
     >
       <h1>User not found</h1>
     </Flex>
-  );
+  )
 }
-function DonateForm(props) {
-  const db = useStore((state) => state.db);
+function DonateForm (props) {
+  const db = useStore((state) => state.db)
   const {
     valueFirestore,
     ts,
@@ -80,25 +80,25 @@ function DonateForm(props) {
     ticketId,
     name,
     msg,
-    setStatus,
-  } = useDonationPageStore((state) => state);
-  const { setVisible, bindings } = useModal();
+    setStatus
+  } = useDonationPageStore((state) => state)
+  const { setVisible, bindings } = useModal()
   return (
     <>
       <Flex
-        justifyContent={"center"}
+        justifyContent={'center'}
         alignItems="center"
-        height={"90vh"}
+        height={'90vh'}
         direction="column"
         gap="size-1000"
       >
         <Flex direction="column">
           <Container
             css={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
           >
             <Header />
@@ -119,10 +119,10 @@ function DonateForm(props) {
         <MessageInput />
         <Spacer y={2} />
 
-        <Flex direction={"column"} justifyContent="center">
+        <Flex direction={'column'} justifyContent="center">
           <Button
             css={{
-              width: "200px",
+              width: '200px'
             }}
             auto
             flat
@@ -142,7 +142,7 @@ function DonateForm(props) {
             <Modal.Header></Modal.Header>
             <Modal.Body>
               <Flex
-                direction={"column"}
+                direction={'column'}
                 alignItems="center"
                 justifyContent="center"
               >
@@ -162,11 +162,11 @@ function DonateForm(props) {
                 <CopyWalletToClipboard />
                 <Card
                   css={{
-                    width: "min-content",
-                    marginTop: "$4",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: 'min-content',
+                    marginTop: '$4',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
                 >
                   <QRCode size={100} value={valueFirestore.data().wallet} />
@@ -174,7 +174,7 @@ function DonateForm(props) {
               </Flex>
             </Modal.Body>
             <Modal.Footer>
-              <Button flat auto color="error" onClick={() => setVisible(false)}>
+              <Button flat auto color="error" onClick={() => { setVisible(false) }}>
                 Refuse
               </Button>
               <Button
@@ -189,10 +189,10 @@ function DonateForm(props) {
                     valueFirestore.id,
                     ts,
                     ticketId,
-                    db,
-                  ),
+                    db
+                  )
                 ]}
-                size={"sm"}
+                size={'sm'}
               >
                 I`ve paid
               </Button>
@@ -208,46 +208,48 @@ function DonateForm(props) {
         <TwitterLink />
       </Flex>
     </>
-  );
+  )
 }
-function PaidTiket(props) {
+function PaidTiket (props) {
   const { valueFirestore, currentTicket, reset } = useDonationPageStore(
-    (state) => state,
-  );
+    (state) => state
+  )
 
   return (
     <>
       <Flex
-        height={"100vh"}
+        height={'100vh'}
         justifyContent="center"
-        alignItems={"center"}
+        alignItems={'center'}
         direction="column"
       >
         <Text
           h1
           size={45}
           css={{
-            padding: "20px",
-            textGradient: "45deg, $blue500 -20%, $pink500 50%",
+            padding: '20px',
+            textGradient: '45deg, $blue500 -20%, $pink500 50%'
           }}
           weight="bold"
         >
           Donate to {valueFirestore.data().username}
         </Text>
         <Spacer y={3} />
-        {currentTicket.show ? (
+        {currentTicket.show
+          ? (
           <>
             <Text h2 color="success">
               Transaction detected!
             </Text>
           </>
-        ) : (
+            )
+          : (
           <>
             <Progress
               css={{
-                marginTop: "$10",
-                minWidth: "30%",
-                maxWidth: "50%",
+                marginTop: '$10',
+                minWidth: '30%',
+                maxWidth: '50%'
               }}
               shadow
               indeterminated
@@ -259,7 +261,7 @@ function PaidTiket(props) {
               search transaction...
             </Text>
           </>
-        )}
+            )}
 
         <Spacer y={3} />
         <Button
@@ -272,7 +274,7 @@ function PaidTiket(props) {
             // 	setBtcAmount(0),
             // ]
           }
-          css={{ marginTop: "$10" }}
+          css={{ marginTop: '$10' }}
         >
           Send another donation
         </Button>
@@ -284,24 +286,24 @@ function PaidTiket(props) {
         <Spacer />
       </Flex>
     </>
-  );
+  )
 }
-function CopyWalletToClipboard() {
-  const [copied, setCopied] = useState(false);
-  const { valueFirestore } = useDonationPageStore((state) => state);
+function CopyWalletToClipboard () {
+  const [copied, setCopied] = useState(false)
+  const { valueFirestore } = useDonationPageStore((state) => state)
 
   useEffect(() => {
     if (copied) {
       setTimeout(() => {
-        setCopied(false);
-      }, 2000);
+        setCopied(false)
+      }, 2000)
     }
-  }, [copied]);
+  }, [copied])
 
   return (
     <CopyToClipboard
       text={valueFirestore.data().wallet}
-      onCopy={() => setCopied(true)}
+      onCopy={() => { setCopied(true) }}
     >
       {copied ? (
         <Link block color="warning">
@@ -310,7 +312,7 @@ function CopyWalletToClipboard() {
       ) : (
         <Link
           css={{
-            scale: 0.9,
+            scale: 0.9
           }}
           block
           color="warning"
@@ -320,21 +322,21 @@ function CopyWalletToClipboard() {
         </Link>
       )}
     </CopyToClipboard>
-  );
+  )
 }
-function CopyAmountToClipboard() {
-  const [copied, setCopied] = useState(false);
-  const { btcAmount } = useDonationPageStore((state) => state);
+function CopyAmountToClipboard () {
+  const [copied, setCopied] = useState(false)
+  const { btcAmount } = useDonationPageStore((state) => state)
   useEffect(() => {
     if (copied) {
       setTimeout(() => {
-        setCopied(false);
-      }, 2000);
+        setCopied(false)
+      }, 2000)
     }
-  }, [copied]);
+  }, [copied])
 
   return (
-    <CopyToClipboard text={btcAmount} onCopy={() => setCopied(true)}>
+    <CopyToClipboard text={btcAmount} onCopy={() => { setCopied(true) }}>
       {copied ? (
         <Link block color="success">
           Copied!
@@ -349,79 +351,79 @@ function CopyAmountToClipboard() {
         </Link>
       )}
     </CopyToClipboard>
-  );
+  )
 }
-function CurrencySelection() {
+function CurrencySelection () {
   return (
-    <Radio.Group size={"sm"} value="btc">
+    <Radio.Group size={'sm'} value="btc">
       <Container
         css={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "$10",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '$10'
         }}
       >
-        <Radio color={"success"} value={"btc"}>
+        <Radio color={'success'} value={'btc'}>
           BTC
         </Radio>
-        <Radio disabled color={"success"} value={"eth"}>
+        <Radio disabled color={'success'} value={'eth'}>
           ETH
         </Radio>
-        <Radio disabled color="success" value={"usdt"}>
+        <Radio disabled color="success" value={'usdt'}>
           USDT
         </Radio>
       </Container>
     </Radio.Group>
-  );
+  )
 }
-function Header() {
-  const { valueFirestore } = useDonationPageStore((state) => state);
+function Header () {
+  const { valueFirestore } = useDonationPageStore((state) => state)
   return (
     <Text
       h1
       size={50}
       css={{
-        marginRight: "$5",
-        marginTop: "$10",
-        alignItems: "center",
-        textGradient: "45deg, $blue500 -20%, $pink500 50%",
+        marginRight: '$5',
+        marginTop: '$10',
+        alignItems: 'center',
+        textGradient: '45deg, $blue500 -20%, $pink500 50%'
       }}
       weight="bold"
     >
       Donate to {valueFirestore.data().username}
     </Text>
-  );
+  )
 }
-function NameInput() {
-  const { setName } = useDonationPageStore((state) => state);
+function NameInput () {
+  const { setName } = useDonationPageStore((state) => state)
   return (
     <Input
       onChange={(e) => setName(e.target.value)}
       size="md"
       width="300px"
-      type={"text"}
+      type={'text'}
       labelLeft={<Text>Name</Text>}
     />
-  );
+  )
 }
-function AmountInput() {
-  const { setAmount, setUsdAmount } = useDonationPageStore((state) => state);
+function AmountInput () {
+  const { setAmount, setUsdAmount } = useDonationPageStore((state) => state)
   return (
     <Input
       onChange={(e) => [
         setAmount(USDtoBTC(e.target.value)),
-        setUsdAmount(e.target.value),
+        setUsdAmount(e.target.value)
       ]}
       size="md"
       width="300px"
-      type={"number"}
+      type={'number'}
       labelLeft={<Text>$</Text>}
     />
-  );
+  )
 }
-function MessageInput() {
-  const { setMsg } = useDonationPageStore((state) => state);
+function MessageInput () {
+  const { setMsg } = useDonationPageStore((state) => state)
   return (
     <Textarea
       onChange={(e) => setMsg(e.target.value)}
@@ -430,34 +432,34 @@ function MessageInput() {
       minRows={3}
       maxRows={6}
     />
-  );
+  )
 }
-export function DonationPage() {
-  const app = useStore((state) => state.app);
+export function DonationPage () {
+  const app = useStore((state) => state.app)
   const {
     setValueFirestore,
     setValueTickets,
     setCurrentTicket,
-    currentTicket,
-  } = useDonationPageStore((state) => state);
-  const { id } = useParams();
-  const [valueFirestore] = useDocument(doc(getFirestore(app), "users", id));
+    currentTicket
+  } = useDonationPageStore((state) => state)
+  const { id } = useParams()
+  const [valueFirestore] = useDocument(doc(getFirestore(app), 'users', id))
   const [valueTickets] = useCollection(
-    collection(getFirestore(app), "users", id, "tickets/"),
+    collection(getFirestore(app), 'users', id, 'tickets/'),
     {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    },
-  );
+      snapshotListenOptions: { includeMetadataChanges: true }
+    }
+  )
   useEffect(() => {
-    setValueFirestore(valueFirestore);
-    setValueTickets(valueTickets);
-    setCurrentTicket();
-    fetch("https://server-express-tpo4.onrender.com/", { mode: "no-cors" });
-  }, [valueTickets]);
+    setValueFirestore(valueFirestore)
+    setValueTickets(valueTickets)
+    setCurrentTicket()
+    fetch('https://server-express-tpo4.onrender.com/', { mode: 'no-cors' })
+  }, [valueTickets])
 
   useEffect(() => {
-    console.log(currentTicket);
-  }, [currentTicket]);
+    console.log(currentTicket)
+  }, [currentTicket])
 
   return (
     <>
@@ -467,5 +469,5 @@ export function DonationPage() {
         </div>
       </NextUIProvider>
     </>
-  );
+  )
 }

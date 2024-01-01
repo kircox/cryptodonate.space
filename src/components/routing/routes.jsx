@@ -1,6 +1,6 @@
 import { LOGIN_ROUTE, WORKSPACE_ROUTE } from "./utils/consts";
 import Login from "./components/Login";
-import WorkSpace from "./components/WorkSpace";
+import WorkSpace from "../../pages/WorkspacePage/WorkspacePage";
 import React from "react";
 
 export const publicRoutes = [

@@ -4,13 +4,13 @@ import { app, db } from "./index";
 import { getFirestore, doc, Timestamp, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
-
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../config";
 
 const firebase_app = initializeApp(firebaseConfig);
 const firebase_auth = getAuth(firebase_app);
 const firebase_db = getFirestore(firebase_app);
+
 export const useStore = create((set) => ({
   app: firebase_app,
   auth: firebase_auth,
@@ -67,7 +67,8 @@ export const useDonationPageStore = create((set) => ({
 }));
 
 export function setDataFunc(value) {
-  console.log(value && value.data());
+  console.log(value?.data());
+
   if (value) {
     console.log("value");
     console.log(value.data().wallet);
