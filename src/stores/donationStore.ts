@@ -38,7 +38,7 @@ interface DonationStoreActions {
 
 type DonationStore = DonationStoreState & DonationStoreActions;
 
-export const donationStore = create<DonationStore>((set) => ({
+export const useDonationStore = create<DonationStore>((set) => ({
   recipientUserCollection: undefined,
   recipientTicketsCollection: undefined,
   timestamp: Timestamp.fromDate(new Date()).seconds.toString(),
