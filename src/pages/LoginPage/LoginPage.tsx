@@ -1,7 +1,7 @@
 import React from "react";
 import { NextUIProvider, createTheme } from "@nextui-org/react";
 // import { useLocation, useNavigate } from "react-router-dom";
-import { Page } from "./components/LoginForm";
+import { LoginForm } from "./components/Login";
 
 const darkThemeNext = createTheme({
   type: "dark",
@@ -9,7 +9,7 @@ const darkThemeNext = createTheme({
     colors: {}, // optional
   },
 });
-export default function Login() {
+export default function LoginPage(): JSX.Element {
   // const location = useLocation();
   // const navigate = useNavigate();
   // const fromPage = location.state?.from?.pathname || "/";
@@ -17,7 +17,7 @@ export default function Login() {
   return (
     <>
       <NextUIProvider theme={darkThemeNext} />
-      <Page />
+      <LoginForm />
     </>
   );
 }

@@ -6,7 +6,7 @@ import { Link } from "@nextui-org/react";
 import { useAppStore } from "../../stores/appStore.js";
 
 interface LogoProps {
-  fontSize: string;
+  fontSize: number;
   pageLink: boolean;
 }
 
