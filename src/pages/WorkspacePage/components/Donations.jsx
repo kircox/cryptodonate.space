@@ -6,7 +6,7 @@ import { View, Flex, ActionButton, Heading } from "@adobe/react-spectrum";
 import { Text, Container, Spacer } from "@nextui-org/react";
 import Delete from "@spectrum-icons/workflow/Delete";
 import { format } from "fecha";
-import { useStore } from "../../../store";
+import { useStore } from "../../../stores/appStore.js";
 import { CopyOverlayLinkButton } from "./buttons/CopyOverlayLinkButton";
 import { CopyPageLinkButton } from "./buttons/CopyPageLinkButton";
 import { OpenPageButton } from "./buttons/OpenPageButton";
@@ -109,7 +109,7 @@ export function Donations() {
   const [countDonations, setCountDonations] = useState(0);
 
   useEffect(() => {
-    if (confirmTickets && confirmTickets.length) {
+    if (confirmTickets && confirmTickets.length > 0) {
       setCountDonations(confirmTickets.length);
     } else setCountDonations(0);
   }, [confirmTickets]);
@@ -237,7 +237,12 @@ export function Donations() {
                           {doc.data().name}
                         </Text>
 
-                        <ActionButton onPress={() => delDoc(doc)} isQuiet>
+                        <ActionButton
+                          onPress={async () => {
+                            await delDoc(doc);
+                          }}
+                          isQuiet
+                        >
                           <Delete />
                         </ActionButton>
                       </Flex>

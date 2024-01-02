@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useStore } from "../../../store";
+import { useStore } from "../../../stores/appStore.js";
 import { View, Flex } from "@adobe/react-spectrum";
 import {
   Button,
@@ -64,7 +64,9 @@ export function WelcomeWindow() {
                 status="default"
                 placeholder="Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
             </Flex>
             <Spacer y={1} />
@@ -75,7 +77,9 @@ export function WelcomeWindow() {
                   width="300px"
                   placeholder="Bitcoin adress"
                   value={BTCWallet}
-                  onChange={(e) => setBTCWallet(e.target.value)}
+                  onChange={(e) => {
+                    setBTCWallet(e.target.value);
+                  }}
                 />
               </Flex>
             )}
@@ -89,7 +93,9 @@ export function WelcomeWindow() {
                     width="300px"
                     placeholder="Bitcoin adress"
                     value={BTCWallet}
-                    onChange={(e) => setBTCWallet(e.target.value)}
+                    onChange={(e) => {
+                      setBTCWallet(e.target.value);
+                    }}
                   />
                 )}
               </Flex>
@@ -102,7 +108,9 @@ export function WelcomeWindow() {
                     width="300px"
                     placeholder="Bitcoin adress"
                     value={BTCWallet}
-                    onChange={(e) => setBTCWallet(e.target.value)}
+                    onChange={(e) => {
+                      setBTCWallet(e.target.value);
+                    }}
                   />
                 )}
               </Flex>

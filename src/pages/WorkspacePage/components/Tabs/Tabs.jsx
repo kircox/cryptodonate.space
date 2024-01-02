@@ -16,7 +16,7 @@ import { WelcomeWindow } from "../WelcomeWindow";
 import { OverlayTab } from "../Tabs/OverlaySettingsTab";
 import { SettingsTab } from "../Tabs/AccountSettingsTab";
 import { StatsTab } from "../Tabs/StatsTab";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 
 export function WorkSpaceTabs() {
   const { user_value } = useStore((state) => state);

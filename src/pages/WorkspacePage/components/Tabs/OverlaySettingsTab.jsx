@@ -13,7 +13,7 @@ import {
 
 import QRCode from "react-qr-code";
 import { CopyOverlayLinkButton } from "../buttons/CopyOverlayLinkButton";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 
 import {
   qrCodeDownload,
@@ -71,8 +71,10 @@ export function AlertsSwitch() {
             size={"sm"}
             color="success"
             shadow
-            initialChecked={user_value && user_value.data().alert}
-            onChange={(e) => setObsAlert(e.target.checked)}
+            initialChecked={user_value?.data().alert}
+            onChange={(e) => {
+              setObsAlert(e.target.checked);
+            }}
           ></Switch>
           <Text h3>Alerts</Text>
         </Flex>
@@ -120,7 +122,7 @@ export function AlertsSwitch() {
             {/* <Text>Size</Text> */}
 
             <Checkbox
-              initialChecked={user_value && user_value.data().showMessage}
+              initialChecked={user_value?.data().showMessage}
               onChange={setSelected}
             >
               Show message
@@ -171,7 +173,9 @@ export function QrCodeCard() {
       <Flex direction={"column"} justifyContent="center" alignItems="center">
         <Button
           size={"md"}
-          onClick={() => qrCodeDownload()}
+          onClick={() => {
+            qrCodeDownload();
+          }}
           flat
           color={"success"}
         >

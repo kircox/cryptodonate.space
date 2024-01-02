@@ -5,7 +5,7 @@ import Copy from "@spectrum-icons/workflow/Copy";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Tooltip } from "@nextui-org/react";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 
 export function CopyOverlayLinkButton(props) {
   const user = useStore((state) => state.user);
@@ -18,12 +18,13 @@ export function CopyOverlayLinkButton(props) {
     }
   }, [copiedOverlayLink]);
   return (
-    user &&
-    user.uid && (
+    user?.uid && (
       <>
         <CopyToClipboard
           text={"http://cryptodonate.space/overlay/" + user.uid}
-          onCopy={() => setCopiedOverlayLink(true)}
+          onCopy={() => {
+            setCopiedOverlayLink(true);
+          }}
         >
           {copiedOverlayLink ? (
             <Button

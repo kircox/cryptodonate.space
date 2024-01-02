@@ -1,7 +1,7 @@
 import { Link } from "@nextui-org/react";
-import React from "react";
+import React, { type ReactElement } from "react";
 
-export function TwitterLink() {
+export function TwitterLink(): ReactElement {
   return (
     <Link
       css={{}}

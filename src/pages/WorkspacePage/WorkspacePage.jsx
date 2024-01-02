@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 import { Provider, darkTheme, Grid } from "@adobe/react-spectrum";
 import { Donations } from "./components/Donations";
 import { NextUIProvider } from "@nextui-org/react";
-import { useStore } from "../../store";
+import { useStore } from "../../stores/appStore.js";
 import { WorkSpaceTabs } from "./components/Tabs/Tabs";
 import { WorkspaceHeader } from "./components/Header/WorkspaceHeader";
 

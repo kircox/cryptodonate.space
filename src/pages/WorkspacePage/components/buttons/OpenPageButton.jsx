@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
 import GlobeOutline from "@spectrum-icons/workflow/GlobeOutline";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 
 export function OpenPageButton() {
   const user = useStore((state) => state.user);

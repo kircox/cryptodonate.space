@@ -1,7 +1,7 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { Button } from "@nextui-org/react";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 
 export function SignOutButton() {
   const { auth } = useStore((state) => state);

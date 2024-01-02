@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Copy from "@spectrum-icons/workflow/Copy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Tooltip } from "@nextui-org/react";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 
 export function CopyPageLinkButton() {
   const [copiedPageLink, setCopiedPageLink] = useState(false);
@@ -15,12 +15,13 @@ export function CopyPageLinkButton() {
     }
   }, [copiedPageLink]);
   return (
-    user &&
-    user.uid && (
+    user?.uid && (
       <>
         <CopyToClipboard
           text={"http://cryptodonate.space/user/" + user.uid}
-          onCopy={() => setCopiedPageLink(true)}
+          onCopy={() => {
+            setCopiedPageLink(true);
+          }}
         >
           {copiedPageLink ? (
             <Button color="success" flat auto size="xs">

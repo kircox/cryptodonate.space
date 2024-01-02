@@ -5,7 +5,7 @@ import { Flex } from "@adobe/react-spectrum";
 import { Card, Spacer, Text } from "@nextui-org/react";
 import { LineChart, Line, Tooltip } from "recharts";
 import { format } from "fecha";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore";
 import {
   getLastMounthDonates,
   sum,

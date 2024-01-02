@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Flex } from "@adobe/react-spectrum";
 import { Button, Card, Collapse, Spacer, Input } from "@nextui-org/react";
-import { useStore } from "../../../../store";
+import { useStore } from "../../../../stores/appStore.js";
 import { updateUsername, updateWallet } from "../../../../utils/utils";
 
 export function SettingsTab(props) {
@@ -27,7 +27,7 @@ export function SettingsTab(props) {
               {changeName ? (
                 <>
                   <Input
-                    value={user_value && user_value.data().username}
+                    value={user_value?.data().username}
                     disabled
                     readOnly
                     css={{
@@ -36,7 +36,12 @@ export function SettingsTab(props) {
                   />
                   <Spacer />
 
-                  <Button onClick={() => setChangeName(false)} size={"xs"}>
+                  <Button
+                    onClick={() => {
+                      setChangeName(false);
+                    }}
+                    size={"xs"}
+                  >
                     Change
                   </Button>
                 </>
@@ -44,7 +49,9 @@ export function SettingsTab(props) {
                 <>
                   <Input
                     value={name2}
-                    onChange={(e) => setName2(e.target.value)}
+                    onChange={(e) => {
+                      setName2(e.target.value);
+                    }}
                     status="success"
                     css={{
                       width: "400px",
@@ -72,7 +79,7 @@ export function SettingsTab(props) {
               {changeBTC ? (
                 <>
                   <Input
-                    value={user_value && user_value.data().wallet}
+                    value={user_value?.data().wallet}
                     disabled
                     readOnly
                     css={{
@@ -81,7 +88,12 @@ export function SettingsTab(props) {
                   />
                   <Spacer />
 
-                  <Button onClick={() => setChangeBTC(false)} size={"xs"}>
+                  <Button
+                    onClick={() => {
+                      setChangeBTC(false);
+                    }}
+                    size={"xs"}
+                  >
                     Change
                   </Button>
                 </>
@@ -93,7 +105,9 @@ export function SettingsTab(props) {
                       width: "400px",
                     }}
                     value={BTCWallet2}
-                    onChange={(e) => setBTCWallet2(e.target.value)}
+                    onChange={(e) => {
+                      setBTCWallet2(e.target.value);
+                    }}
                   />
                   <Spacer />
                   <Button
