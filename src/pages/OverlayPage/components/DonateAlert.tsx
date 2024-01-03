@@ -4,7 +4,7 @@ import { collection, getFirestore, doc } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { Container, Loading } from "@nextui-org/react";
 import { TestDonate } from "./TestDonate";
-import { ticketFilter } from "../../../utils/stats";
+import { ticketsConfirmFilter } from "../../../utils/stats";
 import { LastDonate } from "./LastDonate";
 
 interface DonateAlertProps {
@@ -31,7 +31,7 @@ export function DonateAlert(props: DonateAlertProps): JSX.Element {
 
   useEffect(() => {
     if (valueTickets !== undefined) {
-      setCount(ticketFilter(valueTickets)?.length ?? 0);
+      setCount(ticketsConfirmFilter(valueTickets)?.length ?? 0);
     }
   });
   //
@@ -63,7 +63,7 @@ export function DonateAlert(props: DonateAlertProps): JSX.Element {
   }
 
   if (value?.data() !== undefined && valueTickets !== undefined) {
-    const confirmTickets = ticketFilter(valueTickets);
+    const confirmTickets = ticketsConfirmFilter(valueTickets);
 
     if (confirmTickets?.length === 0) {
       return (
