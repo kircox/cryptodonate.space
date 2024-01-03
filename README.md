@@ -1,9 +1,10 @@
 # Donation alerts for cryptocurrencies
+[CryptoDonate](https://cryptodonate.space)
 
 Receive donations in cryptocurrency with messages from patrons.
 Donations alerts during live broadcast with OBS Studio.
 The service is open source and does not take a commission, but you can support the project by sending donation in cryptocurrency in our service:
-http://cryptodonate.space/user/5OYCcy92SaMrGeh2DAZQo5FaUdU2
+[Donate me](https://cryptodonate.space/user/5OYCcy92SaMrGeh2DAZQo5FaUdU2)
 
 ## Description project:
 
