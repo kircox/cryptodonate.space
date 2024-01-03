@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
 import { deleteDoc } from "firebase/firestore";
-import { View, Flex, ActionButton, Heading } from "@adobe/react-spectrum";
+import { View, Flex, ActionButton } from "@adobe/react-spectrum";
 import { Text, Container, Spacer } from "@nextui-org/react";
 import Delete from "@spectrum-icons/workflow/Delete";
 import { format } from "fecha";
-import { useStore } from "../../../stores/appStore.js";
-import { CopyOverlayLinkButton } from "./buttons/CopyOverlayLinkButton";
-import { CopyPageLinkButton } from "./buttons/CopyPageLinkButton";
-import { OpenPageButton } from "./buttons/OpenPageButton";
+import { useAppStore } from "../../../stores/appStore.js";
+import { CopyOverlayLinkButton } from "./buttons/CopyOverlayLinkButton.jsx";
+import { CopyPageLinkButton } from "./buttons/CopyPageLinkButton.jsx";
+import { OpenPageButton } from "./buttons/OpenPageButton.jsx";
 // import useSound from "use-sound";
 // import beep from "../../public/coins.mp3";
 // function getLastInputs(adress, value, wallet) {
@@ -60,14 +62,14 @@ import { OpenPageButton } from "./buttons/OpenPageButton";
 //   return null;
 // }
 
-async function delDoc(doc) {
+async function delDoc(doc: any): Promise<void> {
   await deleteDoc(doc.ref);
 }
-function ticketFilter(valueTickets) {
-  if (valueTickets) {
-    const arr = [];
+function ticketFilter(valueTickets: any): any {
+  if (valueTickets !== undefined) {
+    const arr: any = [];
     const arrConfirm = [];
-    valueTickets.docs.map((doc) => arr.push(doc));
+    valueTickets.docs.map((doc: any) => arr.push(doc));
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].data().status === "confirm") {
         arrConfirm.push(arr[i]);
@@ -79,15 +81,15 @@ function ticketFilter(valueTickets) {
   return null;
 }
 
-function convertDate(t) {
+function convertDate(t: string): Date {
   const dateIn = new Date(Number(t) * 1000);
 
   return dateIn;
 }
-export function Donations() {
-  const { tickets_value } = useStore((state) => state);
+export function Donations(): JSX.Element {
+  const { ticketsCollection } = useAppStore((state) => state);
 
-  const confirmTickets = ticketFilter(tickets_value);
+  const confirmTickets = ticketFilter(ticketsCollection);
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (copied) {
@@ -109,7 +111,7 @@ export function Donations() {
   const [countDonations, setCountDonations] = useState(0);
 
   useEffect(() => {
-    if (confirmTickets && confirmTickets.length > 0) {
+    if (confirmTickets !== undefined && confirmTickets.length > 0) {
       setCountDonations(confirmTickets.length);
     } else setCountDonations(0);
   }, [confirmTickets]);
@@ -127,7 +129,7 @@ export function Donations() {
         gridArea="toc"
       >
         <Container css={{ backgroundColor: "rgba(0,0,0,0)" }}>
-          {confirmTickets && confirmTickets.length === 0 && (
+          {confirmTickets !== undefined && confirmTickets?.length === 0 && (
             <div id="donations">
               <Flex
                 direction="column"
@@ -203,10 +205,10 @@ export function Donations() {
               </Flex>
             </div>
           )}
-          {tickets_value && (
+          {ticketsCollection !== undefined && (
             <div id="donations">
               <Flex direction={"column-reverse"}>
-                {confirmTickets.map((doc) => (
+                {confirmTickets?.map((doc: any) => (
                   <React.Fragment key={doc.data().id}>
                     <Container
                       css={{
@@ -246,7 +248,7 @@ export function Donations() {
                           <Delete />
                         </ActionButton>
                       </Flex>
-                      <Container css={{ marginTop: "$5" }} padding={"size-0"}>
+                      <Container css={{ marginTop: "$5" }}>
                         <Text>{doc.data().msg}</Text>
                       </Container>
                       <Flex justifyContent="end" alignItems={"center"}>
@@ -275,10 +277,8 @@ export function Donations() {
           )}
 
           <View borderRadius="large" gridArea="nav">
-            <Heading></Heading>
-
-            {tickets_value &&
-              confirmTickets.map((doc) => (
+            {ticketsCollection !== undefined &&
+              confirmTickets?.map((doc: any) => (
                 <Text key={doc.data().id}>{doc.data().staus}</Text>
               ))}
           </View>

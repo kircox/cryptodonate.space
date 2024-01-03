@@ -13,7 +13,7 @@ import {
 
 import QRCode from "react-qr-code";
 import { CopyOverlayLinkButton } from "../buttons/CopyOverlayLinkButton";
-import { useStore } from "../../../../stores/appStore.js";
+import { useAppStore } from "../../../../stores/appStore.js";
 
 import {
   qrCodeDownload,
@@ -21,28 +21,31 @@ import {
   updateAlertSetting,
 } from "../../../../utils/utils";
 
-export function OverlayTab(props) {
+export function OverlayTab(): JSX.Element {
   return (
     <>
       <Flex justifyContent={"left"}>
         <AlertsSwitch />
         <QrCodeCard />
       </Flex>
-      <Flex justifyContent={"center"} alignItems="center"></Flex>
     </>
   );
 }
 
-export function AlertsSwitch() {
+export function AlertsSwitch(): JSX.Element {
   const [copied, setCopied] = useState(false);
   const [selected, setSelected] = useState("");
-  const [obsAlert, setObsAlert] = useState("");
-  const { db, user, user_value } = useStore((state) => state);
+  const [obsAlert, setObsAlert] = useState(false);
+  const { db, user, userCollection } = useAppStore((state) => state);
   useEffect(() => {
-    updateAlertSetting(db, user, obsAlert, user_value);
+    if (user !== undefined) {
+      updateAlertSetting(db, user, obsAlert, userCollection);
+    }
   }, [obsAlert]);
   useEffect(() => {
-    updateShowMessageSetting(db, user, selected, user_value);
+    if (user !== undefined) {
+      updateShowMessageSetting(db, user, selected, userCollection);
+    }
   }, [selected]);
   useEffect(() => {
     if (copied) {
@@ -61,17 +64,12 @@ export function AlertsSwitch() {
           backgroundColor: "$accents3",
         }}
       >
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          gap={"size-200"}
-          orientation="horizontal"
-        >
+        <Flex justifyContent="center" alignItems="center" gap={"size-200"}>
           <Switch
             size={"sm"}
             color="success"
             shadow
-            initialChecked={user_value?.data().alert}
+            initialChecked={userCollection?.data()?.alert}
             onChange={(e) => {
               setObsAlert(e.target.checked);
             }}
@@ -104,11 +102,12 @@ export function AlertsSwitch() {
                 $100
               </Text>
             </Flex>
-            {user_value && user_value.data().showMessage === true && (
-              <>
-                <Text h5>Message example</Text>
-              </>
-            )}
+            {userCollection !== undefined &&
+              userCollection?.data()?.showMessage === true && (
+                <>
+                  <Text h5>Message example</Text>
+                </>
+              )}
           </Card>
         </Flex>
         <Spacer />
@@ -122,8 +121,8 @@ export function AlertsSwitch() {
             {/* <Text>Size</Text> */}
 
             <Checkbox
-              initialChecked={user_value?.data().showMessage}
-              onChange={setSelected}
+              initialChecked={userCollection?.data()?.showMessage}
+              onChange={() => setSelected}
             >
               Show message
             </Checkbox>
@@ -140,8 +139,8 @@ export function AlertsSwitch() {
   );
 }
 
-export function QrCodeCard() {
-  const { user } = useStore((state) => state);
+export function QrCodeCard(): JSX.Element {
+  const { user } = useAppStore((state) => state);
   return (
     <Card
       css={{
@@ -152,12 +151,7 @@ export function QrCodeCard() {
         height: "fit-content",
       }}
     >
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        gap={"size-200"}
-        orientation="horizontal"
-      >
+      <Flex justifyContent="center" alignItems="center" gap={"size-200"}>
         <Text h3>QR Code</Text>
       </Flex>
       <Spacer />
@@ -166,7 +160,7 @@ export function QrCodeCard() {
         <QRCode
           id="QRCode"
           size={170}
-          value={"http://cryptodonate.space/user/" + user.uid}
+          value={"http://cryptodonate.space/user/" + user?.uid}
         />
       </Flex>
       <Spacer y={1.5} />

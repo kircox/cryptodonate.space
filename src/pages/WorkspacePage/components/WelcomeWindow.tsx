@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import React, { useState } from "react";
 
-import { useStore } from "../../../stores/appStore.js";
+import { useAppStore } from "../../../stores/appStore.js";
 import { View, Flex } from "@adobe/react-spectrum";
 import {
   Button,
@@ -12,13 +13,14 @@ import {
 } from "@nextui-org/react";
 
 import { validate } from "bitcoin-address-validation";
-import { createUserData } from "../../../utils/utils";
+import { createUserData } from "../../../utils/utils.js";
 
-export function WelcomeWindow() {
+export function WelcomeWindow(): JSX.Element {
   const [name, setName] = useState("");
   const [BTCWallet, setBTCWallet] = useState("");
   const [validateBTC, setValidate] = useState(true);
-  const { db, user } = useStore((state) => state);
+  const { db, user } = useAppStore((state) => state);
+
   return (
     <View
       height={"88vh"}
@@ -120,15 +122,17 @@ export function WelcomeWindow() {
 
             <Spacer y={1} />
             <Flex justifyContent={"center"}>
-              <Button
-                css={{ width: "fit-content" }}
-                onClick={() => [
-                  setValidate(validate(BTCWallet)),
-                  createUserData(db, user, name, BTCWallet),
-                ]}
-              >
-                Continue
-              </Button>
+              {user !== undefined && (
+                <Button
+                  css={{ width: "fit-content" }}
+                  onClick={() => [
+                    setValidate(validate(BTCWallet)),
+                    createUserData(db, user, name, BTCWallet),
+                  ]}
+                >
+                  Continue
+                </Button>
+              )}
             </Flex>
             <Spacer y={0.5} />
           </Card>

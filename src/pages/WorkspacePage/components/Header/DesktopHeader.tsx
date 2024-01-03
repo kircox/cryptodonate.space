@@ -3,13 +3,13 @@ import { View, Flex } from "@adobe/react-spectrum";
 
 import { Container } from "@nextui-org/react";
 
-import { SignOutButton } from "../Header/SignOutButton";
+import { SignOutButton } from "./SignOutButton";
 import { CopyPageLinkButton } from "../buttons/CopyPageLinkButton";
 import { CopyOverlayLinkButton } from "../buttons/CopyOverlayLinkButton";
 
 import { Logo } from "../../../../components/shared/Logo";
 
-export function DesktopHeader() {
+export function DesktopHeader(): JSX.Element {
   return (
     <>
       <View marginTop={"size-75"}>

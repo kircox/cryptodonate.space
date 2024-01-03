@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Flex } from "@adobe/react-spectrum";
 import { Container } from "@nextui-org/react";
-import { SignOutButton } from "../Header/SignOutButton";
+import { SignOutButton } from "./SignOutButton";
 import { Logo } from "../../../../components/shared/Logo";
 
-export function MobileHeader() {
+export function MobileHeader(): JSX.Element {
   return (
     <>
       <Container

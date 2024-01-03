@@ -1,45 +1,33 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
-import { useUpdateProfile } from "react-firebase-hooks/auth";
+// import { useUpdateProfile } from "react-firebase-hooks/auth";
 import { Navigate } from "react-router-dom";
 import { Provider, darkTheme, Grid } from "@adobe/react-spectrum";
 import { Donations } from "./components/Donations";
 import { NextUIProvider } from "@nextui-org/react";
-import { useStore } from "../../stores/appStore.js";
+import { useAppStore } from "../../stores/appStore.js";
 import { WorkSpaceTabs } from "./components/Tabs/Tabs";
 import { WorkspaceHeader } from "./components/Header/WorkspaceHeader";
 
 import { darkThemeNext } from "../../utils/utils";
 
-export default function WorkSpace() {
-  const [BTCWallet] = useState();
-  const { auth, user, tickets_value } = useStore((state) => state);
+export default function WorkSpace(): JSX.Element {
+  // const [BTCWallet] = useState();
+  const { user } = useAppStore((state) => state);
   useEffect(() => {
     console.log(user);
   }, [user]);
 
-  const [updateProfile] = useUpdateProfile(auth);
+  // useEffect(async () => {
+  //   await updateProfile(user);
+  //   // console.log("update profile");
+  //   // console.log(user);
+  // }, []);
 
-  useEffect(async () => {
-    await updateProfile({});
-    // console.log("update profile");
-    // console.log(user);
-  }, []);
-
-  const [setValid] = useState(false);
-  useEffect(() => {
-    if (BTCWallet === "") {
-      setValid(true);
-    }
-  }, []);
-
-  if (user) {
-    if (tickets_value) {
-      // tickets_value.docs.map((doc) => console.log(doc.data()));
-    }
-
+  if (user !== undefined) {
     return (
       <>
         <Provider theme={darkTheme}>

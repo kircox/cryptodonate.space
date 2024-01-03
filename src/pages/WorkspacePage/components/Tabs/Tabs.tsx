@@ -13,15 +13,18 @@ import {
 import { Container } from "@nextui-org/react";
 
 import { WelcomeWindow } from "../WelcomeWindow";
-import { OverlayTab } from "../Tabs/OverlaySettingsTab";
-import { SettingsTab } from "../Tabs/AccountSettingsTab";
-import { StatsTab } from "../Tabs/StatsTab";
-import { useStore } from "../../../../stores/appStore.js";
+import { OverlayTab } from "./OverlaySettingsTab";
+import { SettingsTab } from "./AccountSettingsTab";
+import { StatsTab } from "./StatsTab";
+import { useAppStore } from "../../../../stores/appStore.js";
 
-export function WorkSpaceTabs() {
-  const { user_value } = useStore((state) => state);
-
-  if (user_value && user_value._document == null) {
+export function WorkSpaceTabs(): JSX.Element {
+  const { userCollection } = useAppStore((state) => state);
+  if (
+    userCollection !== undefined &&
+    "_document" in userCollection &&
+    userCollection._document !== null
+  ) {
     return <WelcomeWindow />;
   }
 

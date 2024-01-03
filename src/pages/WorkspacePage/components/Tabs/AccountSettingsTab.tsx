@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import { Flex } from "@adobe/react-spectrum";
 import { Button, Card, Collapse, Spacer, Input } from "@nextui-org/react";
-import { useStore } from "../../../../stores/appStore.js";
-import { updateUsername, updateWallet } from "../../../../utils/utils";
+import { useAppStore } from "../../../../stores/appStore.js";
+import { updateUsername, updateWallet } from "../../../../utils/utils.js";
 
-export function SettingsTab(props) {
-  const { db, user, user_value } = useStore((state) => state);
+export function SettingsTab(): JSX.Element {
+  const { db, user, userCollection } = useAppStore((state) => state);
   const [changeName, setChangeName] = useState(true);
   const [changeBTC, setChangeBTC] = useState(true);
   const [name2, setName2] = useState("");
@@ -27,7 +28,7 @@ export function SettingsTab(props) {
               {changeName ? (
                 <>
                   <Input
-                    value={user_value?.data().username}
+                    value={userCollection?.data()?.username}
                     disabled
                     readOnly
                     css={{
@@ -58,16 +59,18 @@ export function SettingsTab(props) {
                     }}
                   />
                   <Spacer />
-                  <Button
-                    size={"xs"}
-                    color={"success"}
-                    onClick={() => [
-                      updateUsername(db, user, name2),
-                      setChangeName(true),
-                    ]}
-                  >
-                    Save
-                  </Button>
+                  {user !== undefined && (
+                    <Button
+                      size={"xs"}
+                      color={"success"}
+                      onClick={() => [
+                        updateUsername(db, user, name2),
+                        setChangeName(true),
+                      ]}
+                    >
+                      Save
+                    </Button>
+                  )}
                 </>
               )}
             </Collapse>
@@ -79,7 +82,7 @@ export function SettingsTab(props) {
               {changeBTC ? (
                 <>
                   <Input
-                    value={user_value?.data().wallet}
+                    value={userCollection?.data()?.wallet}
                     disabled
                     readOnly
                     css={{
@@ -110,16 +113,18 @@ export function SettingsTab(props) {
                     }}
                   />
                   <Spacer />
-                  <Button
-                    color={"success"}
-                    onClick={() => [
-                      updateWallet(db, user, BTCWallet2),
-                      setChangeBTC(true),
-                    ]}
-                    size={"xs"}
-                  >
-                    Save
-                  </Button>
+                  {user !== undefined && (
+                    <Button
+                      color={"success"}
+                      onClick={() => [
+                        updateWallet(db, user, BTCWallet2),
+                        setChangeBTC(true),
+                      ]}
+                      size={"xs"}
+                    >
+                      Save
+                    </Button>
+                  )}
                 </>
               )}
             </Collapse>

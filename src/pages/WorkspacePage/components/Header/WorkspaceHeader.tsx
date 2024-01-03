@@ -3,7 +3,7 @@ import { View } from "@adobe/react-spectrum";
 import { MobileHeader } from "./MobileHeader";
 import { DesktopHeader } from "./DesktopHeader";
 
-export function WorkspaceHeader() {
+export function WorkspaceHeader(): JSX.Element {
   return (
     <>
       <View

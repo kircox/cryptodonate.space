@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import Copy from "@spectrum-icons/workflow/Copy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Tooltip } from "@nextui-org/react";
-import { useStore } from "../../../../stores/appStore.js";
+import { useAppStore } from "../../../../stores/appStore.js";
 
-export function CopyPageLinkButton() {
+export function CopyPageLinkButton(): JSX.Element {
   const [copiedPageLink, setCopiedPageLink] = useState(false);
-  const user = useStore((state) => state.user);
+  const user = useAppStore((state) => state.user);
   useEffect(() => {
     if (copiedPageLink) {
       setTimeout(() => {
@@ -15,8 +15,8 @@ export function CopyPageLinkButton() {
     }
   }, [copiedPageLink]);
   return (
-    user?.uid && (
-      <>
+    <>
+      {user !== undefined && (
         <CopyToClipboard
           text={"http://cryptodonate.space/user/" + user.uid}
           onCopy={() => {
@@ -41,7 +41,7 @@ export function CopyPageLinkButton() {
             </Tooltip>
           )}
         </CopyToClipboard>
-      </>
-    )
+      )}
+    </>
   );
 }

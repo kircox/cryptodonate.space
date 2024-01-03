@@ -5,15 +5,21 @@ import { Flex } from "@adobe/react-spectrum";
 import { Card, Spacer, Text } from "@nextui-org/react";
 import { LineChart, Line, Tooltip } from "recharts";
 import { format } from "fecha";
-import { useStore } from "../../../../stores/appStore";
+import { useAppStore } from "../../../../stores/appStore";
 import {
   getLastMounthDonates,
   sum,
   countDonate,
-  ticketFilter,
+  ticketsConfirmFilter,
 } from "../../../../utils/stats";
 
-function CustomTooltip({ payload, active }) {
+function CustomTooltip({
+  payload,
+  active,
+}: {
+  payload: any;
+  active: boolean;
+}): JSX.Element | null {
   if (active) {
     if (payload != null) {
       return (
@@ -27,7 +33,7 @@ function CustomTooltip({ payload, active }) {
 
   return null;
 }
-export function StatsTab() {
+export function StatsTab(): JSX.Element {
   return (
     <>
       <Flex justifyContent={"left"} alignItems="center">
@@ -51,7 +57,7 @@ export function StatsTab() {
   );
 }
 
-export function MonthLabel() {
+export function MonthLabel(): JSX.Element {
   return (
     <>
       <Text
@@ -68,9 +74,9 @@ export function MonthLabel() {
   );
 }
 
-export function AmountLabel() {
-  const { tickets_value } = useStore((state) => state);
-  const confirmTickets = ticketFilter(tickets_value);
+export function AmountLabel(): JSX.Element {
+  const { ticketsCollection } = useAppStore((state) => state);
+  const confirmTickets = ticketsConfirmFilter(ticketsCollection);
   const [month] = useState(format(new Date(), "MMMM"));
   return (
     <>
@@ -89,9 +95,9 @@ export function AmountLabel() {
   );
 }
 
-export function DonationsCount() {
-  const { tickets_value } = useStore((state) => state);
-  const confirmTickets = ticketFilter(tickets_value);
+export function DonationsCount(): JSX.Element {
+  const { ticketsCollection } = useAppStore((state) => state);
+  const confirmTickets = ticketsConfirmFilter(ticketsCollection);
   const [month] = useState(format(new Date(), "MMMM"));
 
   return (
@@ -123,18 +129,26 @@ export function DonationsCount() {
   );
 }
 
-export function EarningLineChart() {
-  const { tickets_value } = useStore((state) => state);
-  const confirmTickets = ticketFilter(tickets_value);
+export function EarningLineChart(): JSX.Element {
+  const { ticketsCollection } = useAppStore((state) => state);
+  const confirmTickets = ticketsConfirmFilter(ticketsCollection);
   const [month] = useState(format(new Date(), "MMMM"));
   return (
-    <LineChart
-      width={550}
-      height={150}
-      data={getLastMounthDonates(confirmTickets, month)}
-    >
-      <Tooltip dataKey="name" content={<CustomTooltip />} cursor={false} />
-      <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={5} />
-    </LineChart>
+    <>
+      {confirmTickets !== undefined && (
+        <LineChart
+          width={550}
+          height={150}
+          data={getLastMounthDonates(confirmTickets, month)}
+        >
+          <Tooltip
+            // dataKey="name"
+            content={<CustomTooltip payload={""} active={false} />}
+            cursor={false}
+          />
+          <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={5} />
+        </LineChart>
+      )}
+    </>
   );
 }
