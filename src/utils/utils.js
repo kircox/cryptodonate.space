@@ -69,7 +69,7 @@ export function updateWallet(db, user, wallet) {
 }
 
 export function updateSetting(db, user, selected, value) {
-  if (value && value._document != null) {
+  if (value?._document != null) {
     setDoc(
       doc(db, "users", user.uid),
       {
@@ -101,7 +101,7 @@ export const qrCodeDownload = () => {
 
 export function updateShowMessageSetting(db, user, selected, value) {
   if (selected !== "") {
-    if (value && value._document != null) {
+    if (value?._document != null) {
       setDoc(
         doc(db, "users", user.uid),
         {
@@ -115,7 +115,7 @@ export function updateShowMessageSetting(db, user, selected, value) {
 
 export function updateAlertSetting(db, user, alertValue, value) {
   if (alertValue !== "") {
-    if (value && value._document != null) {
+    if (value?._document != null) {
       setDoc(
         doc(db, "users", user.uid),
         {

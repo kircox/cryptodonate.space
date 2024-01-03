@@ -10,7 +10,7 @@ import { Logo } from "../../../components/shared/Logo";
 import { TwitterLink } from "../../../components/shared/TwitterLink";
 import { SignInWithEmail } from "./SignInWithEmail";
 
-export function LoginForm(): JSX.Element {
+export function AuthForm(): JSX.Element {
   const { auth } = useAppStore((state) => state);
 
   const login = async (): Promise<void> => {
@@ -53,7 +53,6 @@ export function LoginForm(): JSX.Element {
           </Button>
           <Spacer />
           <Spacer />
-
           <Button
             shadow
             rounded

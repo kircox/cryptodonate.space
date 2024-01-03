@@ -1,23 +1,19 @@
 import React from "react";
 import { NextUIProvider, createTheme } from "@nextui-org/react";
 // import { useLocation, useNavigate } from "react-router-dom";
-import { LoginForm } from "./components/Login";
+import { AuthForm } from "./components/AuthForm";
 
 const darkThemeNext = createTheme({
   type: "dark",
   theme: {
-    colors: {}, // optional
+    colors: {},
   },
 });
 export default function LoginPage(): JSX.Element {
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // const fromPage = location.state?.from?.pathname || "/";
-
   return (
     <>
       <NextUIProvider theme={darkThemeNext} />
-      <LoginForm />
+      <AuthForm />
     </>
   );
 }
