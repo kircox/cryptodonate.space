@@ -13,6 +13,12 @@ import { OverlayPage } from "./pages/OverlayPage/OverlayPage.jsx";
 import { InitStore } from "./components/utils/InitStore.jsx";
 import { useAppStore } from "./stores/appStore";
 
+/* Если пользователь уже авторизован и перезагружает страницу компонент рендерится 4 раза
+1: Пользователь не авторизован, переадрессация на Login
+2: Пользователь авторизован, переадрессация на WorkSpace
+3: 
+*/
+
 function App(): JSX.Element {
   console.log("re-render");
   const { auth } = useAppStore((state) => state);
@@ -35,7 +41,7 @@ function App(): JSX.Element {
             path="/workspace"
             element={
               <AuthControlRoute requireAuth={true}>
-                {<WorkSpace />}
+                <WorkSpace />
               </AuthControlRoute>
             }
           />

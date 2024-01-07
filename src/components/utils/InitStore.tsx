@@ -9,7 +9,7 @@ interface InitStoreProps {
   user: User;
 }
 
-export function InitStore(props: InitStoreProps): null | JSX.Element {
+export function InitStore(props: InitStoreProps): null {
   const { app, setUserCollection, setTicketsCollection, setUser } = useAppStore(
     (state) => state,
   );
