@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles.css";
 import { LoginPage } from "./pages/LoginPage/LoginPage.jsx";
 import WorkSpace from "./pages/WorkspacePage/WorkspacePage.jsx";
-import { RequireAuth } from "./components/auth/RequireAuth";
-import { RequireNoAuth } from "./components/auth/RequireNoAuth";
+import { AuthControlRoute } from "./components/auth/AuthControlRoute";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import { DonationPage } from "./pages/DonationPage/DonationPage.jsx";
 import { OverlayPage } from "./pages/OverlayPage/OverlayPage.jsx";
@@ -14,7 +14,7 @@ import { InitStore } from "./components/utils/InitStore.jsx";
 import { useAppStore } from "./stores/appStore";
 
 function App(): JSX.Element {
-  console.log("render");
+  console.log("re-render");
   const { auth } = useAppStore((state) => state);
   const [initialUser] = useAuthState(auth);
 
@@ -26,14 +26,18 @@ function App(): JSX.Element {
           <Route
             path="/"
             element={
-              <RequireNoAuth>
+              <AuthControlRoute requireAuth={false}>
                 <LoginPage />
-              </RequireNoAuth>
+              </AuthControlRoute>
             }
           />
           <Route
             path="/workspace"
-            element={<RequireAuth>{<WorkSpace />}</RequireAuth>}
+            element={
+              <AuthControlRoute requireAuth={true}>
+                {<WorkSpace />}
+              </AuthControlRoute>
+            }
           />
           <Route path="user/:id" element={<DonationPage />} />
           <Route
