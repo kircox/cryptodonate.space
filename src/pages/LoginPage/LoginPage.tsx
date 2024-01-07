@@ -9,7 +9,7 @@ const darkThemeNext = createTheme({
     colors: {},
   },
 });
-export default function LoginPage(): JSX.Element {
+export function LoginPage(): JSX.Element {
   return (
     <>
       <NextUIProvider theme={darkThemeNext} />

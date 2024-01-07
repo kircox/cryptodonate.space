@@ -90,6 +90,7 @@ export function Donations(): JSX.Element {
   const { ticketsCollection } = useAppStore((state) => state);
 
   const confirmTickets = ticketFilter(ticketsCollection);
+
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (copied) {
@@ -111,7 +112,7 @@ export function Donations(): JSX.Element {
   const [countDonations, setCountDonations] = useState(0);
 
   useEffect(() => {
-    if (confirmTickets !== undefined && confirmTickets.length > 0) {
+    if (confirmTickets != null && confirmTickets.length > 0) {
       setCountDonations(confirmTickets.length);
     } else setCountDonations(0);
   }, [confirmTickets]);

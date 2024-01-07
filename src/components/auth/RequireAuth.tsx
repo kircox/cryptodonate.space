@@ -6,6 +6,7 @@ import { type RequireAuthProps } from "./types";
 export const RequireAuth = ({ children }: RequireAuthProps): ReactElement => {
   const location = useLocation();
   const { user } = useAppStore((state) => state);
+  console.log(user);
   if (user === undefined) {
     console.log(user);
     console.log("Пользователь не авторизован, переадрессация на Login");

@@ -9,18 +9,18 @@ interface InitStoreProps {
   user: User;
 }
 
-export function InitStore(props: InitStoreProps): null {
+export function InitStore(props: InitStoreProps): null | JSX.Element {
   const { app, setUserCollection, setTicketsCollection, setUser } = useAppStore(
     (state) => state,
   );
 
-  const [userCollection] = useDocument(
+  const [userCollection, isLoadingUserCollection] = useDocument(
     doc(getFirestore(app), "users", props.user.uid),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
     },
   );
-  const [ticketsCollection] = useCollection(
+  const [ticketsCollection, isLoadingTicketsCollection] = useCollection(
     collection(getFirestore(app), "users", props.user.uid, "tickets/"),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
@@ -33,10 +33,15 @@ export function InitStore(props: InitStoreProps): null {
 
   useEffect(() => {
     if (userCollection !== undefined && ticketsCollection !== undefined) {
-      setUserCollection(userCollection);
       setTicketsCollection(ticketsCollection);
     }
-  }, [userCollection, ticketsCollection]);
+  }, [isLoadingTicketsCollection]);
+
+  useEffect(() => {
+    if (userCollection !== undefined && ticketsCollection !== undefined) {
+      setUserCollection(userCollection);
+    }
+  }, [isLoadingUserCollection]);
 
   return null;
 }
